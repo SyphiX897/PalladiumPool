@@ -1,0 +1,4 @@
+name: PalladiumPool
+version: '${version}'
+main: ir.syphix.palladiumpool.PalladiumPool
+api-version: '1.20'
