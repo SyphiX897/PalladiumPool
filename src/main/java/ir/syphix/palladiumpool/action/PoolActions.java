@@ -1,6 +1,7 @@
 package ir.syphix.palladiumpool.action;
 
 import ir.syphix.palladiumpool.PalladiumPool;
+import ir.syphix.palladiumpool.item.CustomItems;
 import ir.syphix.palladiumpool.message.Messages;
 import ir.syphix.palladiumpool.utils.TextUtils;
 import org.bukkit.Bukkit;
@@ -32,16 +33,26 @@ public class PoolActions {
         int chance = Integer.parseInt(itemInfo.get(2).replace("%", ""));
         int amount = Integer.parseInt(itemInfo.get(1));
         if (chance <= randomNumber()) return;
-        if (!Arrays.stream(Material.values()).map(Material::name).toList().contains(itemInfo.get(0))) {
+        if (CustomItems.customItems.containsKey(itemInfo.get(0))) {
+            ItemStack itemStack = CustomItems.customItems.get(itemInfo.get(0));
+            if (player.getInventory().firstEmpty() == -1) {
+                player.getLocation().getWorld().dropItemNaturally(player.getLocation(), itemStack);
+                player.sendMessage(TextUtils.toFormattedComponent(Messages.INVENTORY_IS_FULL));
+            } else {
+                player.getInventory().addItem(itemStack);
+            }
 
-            return;
-        }
-        ItemStack itemStack = new ItemStack(Material.valueOf(itemInfo.get(0)), amount);
-        if (player.getInventory().firstEmpty() == -1) {
-            player.getLocation().getWorld().dropItemNaturally(player.getLocation(), itemStack);
-            player.sendMessage(TextUtils.toFormattedComponent(Messages.INVENTORY_IS_FULL));
         } else {
-            player.getInventory().addItem(itemStack);
+            if (!Arrays.stream(Material.values()).map(Material::name).toList().contains(itemInfo.get(0))) {
+                return;
+            }
+            ItemStack itemStack = new ItemStack(Material.valueOf(itemInfo.get(0)), amount);
+            if (player.getInventory().firstEmpty() == -1) {
+                player.getLocation().getWorld().dropItemNaturally(player.getLocation(), itemStack);
+                player.sendMessage(TextUtils.toFormattedComponent(Messages.INVENTORY_IS_FULL));
+            } else {
+                player.getInventory().addItem(itemStack);
+            }
         }
     }
 

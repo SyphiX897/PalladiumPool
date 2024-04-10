@@ -25,7 +25,7 @@ pool:
     title:
       enabled: true
       title: "<gradient:dark_red:red>You have left the pool"
-      subTitle: "<player>"
+      subTitle: ""
     actionBar:
       enabled: true
       actionBar: "<gradient:dark_red:red>You have left the pool"
