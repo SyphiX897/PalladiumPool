@@ -7,9 +7,9 @@ Supported Minecraft versions: 1.18* - 1.20*
 * Hangar: [PalladiumPool](https://hangar.papermc.io/SyphiX/PalladiumPool)
 
 # Compiling
-Compilation requires JDK 17 and up.
-To compile the plugin, run ``./gradlew build`` from the terminal.
-Once the plugin compiles, grab the jar from ``/bin`` folder.
+* Compilation requires JDK 17 and up.
+* To compile the plugin, run ``./gradlew build`` from the terminal.
+* Once the plugin compiles, grab the jar from ``/bin`` folder.
 
 # Found any problems? contact to me
 Discord ID: .syphix
