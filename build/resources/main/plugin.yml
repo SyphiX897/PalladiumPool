@@ -1,0 +1,9 @@
+name: PalladiumPool
+version: '1.0'
+main: ir.syphix.palladiumpool.PalladiumPool
+api-version: '1.18'
+depend:
+  - Vault
+  - WorldGuard
+softdepend:
+  - Slimefun

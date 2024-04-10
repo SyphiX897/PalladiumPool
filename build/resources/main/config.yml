@@ -1,0 +1,49 @@
+#####################################
+###         PalladiumPool         ###
+###           by SyphiX           ###
+### https://github.com/SyphiX897  ###
+#####################################
+
+disabled_worlds: "world_nether"
+allowed_regions: "afk;afk2"
+
+pool:
+  interval: 300 #seconds
+  enter_pool:
+    title:
+      enabled: true
+      title: "<gradient:dark_green:green>You have entered the pool"
+      subTitle: ""
+    actionBar:
+      enabled: true
+      actionBar: "<gradient:dark_green:green>You have entered the pool"
+    message:
+      enabled: true
+      broadcast: false
+      message: "<gradient:dark_green:green>You have entered the pool"
+  leave_pool:
+    title:
+      enabled: true
+      title: "<gradient:dark_red:red>You have left the pool"
+      subTitle: "<player>"
+    actionBar:
+      enabled: true
+      actionBar: "<gradient:dark_red:red>You have left the pool"
+    message:
+      enabled: true
+      broadcast: false
+      message: "<gradient:dark_red:red>You have left the pool"
+
+  reward:
+    money:
+      enabled: true
+      amount: "600-1000"
+    item: # Supported plugin: Slimefun
+      enabled: true
+      items: # "name;amount;chance"
+        - "DIAMOND;3;25%"
+    command:
+      enabled: true
+      commands:
+        - "console;effect give <player> haste 300 0;25%"
+        - "player;spawn;1%"

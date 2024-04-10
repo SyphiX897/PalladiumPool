@@ -1,0 +1,4 @@
+prefix: "<#00aeff>PalladiumPool<gray> >> "
+
+inventory_is_full: "<gradient:dark_red:red>Your inventory is full!"
+reload: "<gradient:dark_green:green>Plugin successfully reloaded."
