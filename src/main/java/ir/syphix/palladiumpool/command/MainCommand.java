@@ -2,6 +2,7 @@ package ir.syphix.palladiumpool.command;
 
 import ir.syphix.palladiumpool.PalladiumPool;
 import ir.syphix.palladiumpool.message.Messages;
+import ir.syphix.palladiumpool.task.PlayerCheckTask;
 import ir.syphix.palladiumpool.utils.TextUtils;
 import ir.syrent.origin.paper.Origin;
 import ir.syrent.origin.paper.command.OriginCommand;
@@ -20,6 +21,8 @@ public class MainCommand extends OriginCommand {
                     Player player = context.sender().player();
                     Origin.getPlugin().reloadConfig();
                     PalladiumPool.initializeMessageFile();
+                    PlayerCheckTask.stopTask();
+                    PlayerCheckTask.startTask();
                     if (player == null) return;
                     player.sendMessage(TextUtils.toFormattedComponent(Messages.RELOAD));
                 });

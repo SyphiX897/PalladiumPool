@@ -3,23 +3,23 @@ package ir.syphix.palladiumpool.data;
 import ir.syphix.palladiumpool.utils.TextUtils;
 import ir.syrent.origin.paper.Origin;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 
 import java.util.List;
 
+@SuppressWarnings("unused")
 public class DataManager {
     private static final FileConfiguration config = Origin.getPlugin().getConfig();
 
 
-    public static List<String> enabledWorlds() {
-        return TextUtils.split(";", config.getString("enabled_worlds"));
-    }
     public static List<String> disabledWorlds() {
         return TextUtils.split(";", config.getString("disabled_worlds"));
     }
     public static List<String> regions() {
-        return TextUtils.split(";", config.getString("regions"));
+        return TextUtils.split(";", config.getString("allowed_regions"));
     }
     public static int poolInterval() {
         return config.getInt("pool.interval");
@@ -37,14 +37,20 @@ public class DataManager {
         public static boolean isMessageEnable() {
             return enterPoolSection.getBoolean("message.enabled");
         }
-        public static Component title() {
-            return TextUtils.toComponent(enterPoolSection.getString("title.text"));
+        public static boolean isMessageBroadcast() {
+            return enterPoolSection.getBoolean("message.broadcast");
         }
-        public static Component actionBar() {
-            return TextUtils.toComponent(enterPoolSection.getString("actionBar.text"));
+        public static Component title(Player player) {
+            return TextUtils.toComponent(enterPoolSection.getString("title.title"), Placeholder.unparsed("player", player.getName()));
         }
-        public static Component message() {
-            return TextUtils.toComponent(enterPoolSection.getString("message.text"));
+        public static Component subTitle(Player player) {
+            return TextUtils.toComponent(enterPoolSection.getString("title.subTitle"), Placeholder.unparsed("player", player.getName()));
+        }
+        public static Component actionBar(Player player) {
+            return TextUtils.toComponent(enterPoolSection.getString("actionBar.actionBar"), Placeholder.unparsed("player", player.getName()));
+        }
+        public static Component message(Player player) {
+            return TextUtils.toComponent(enterPoolSection.getString("message.message"), Placeholder.unparsed("player", player.getName()));
         }
     }
 
@@ -60,14 +66,20 @@ public class DataManager {
         public static boolean isMessageEnable() {
             return leavePoolSection.getBoolean("message.enabled");
         }
-        public static Component title() {
-            return TextUtils.toComponent(leavePoolSection.getString("title.text"));
+        public static boolean isMessageBroadcast() {
+            return leavePoolSection.getBoolean("message.broadcast");
         }
-        public static Component actionBar() {
-            return TextUtils.toComponent(leavePoolSection.getString("actionBar.text"));
+        public static Component title(Player player) {
+            return TextUtils.toComponent(leavePoolSection.getString("title.title"), Placeholder.unparsed("player", player.getName()));
         }
-        public static Component message() {
-            return TextUtils.toComponent(leavePoolSection.getString("message.text"));
+        public static Component subTitle(Player player) {
+            return TextUtils.toComponent(leavePoolSection.getString("title.subTitle"), Placeholder.unparsed("player", player.getName()));
+        }
+        public static Component actionBar(Player player) {
+            return TextUtils.toComponent(leavePoolSection.getString("actionBar.actionBar"), Placeholder.unparsed("player", player.getName()));
+        }
+        public static Component message(Player player) {
+            return TextUtils.toComponent(leavePoolSection.getString("message.message"), Placeholder.unparsed("player", player.getName()));
         }
     }
 
@@ -81,18 +93,18 @@ public class DataManager {
             return rewardSection.getString("money.amount");
         }
 
-        public static boolean isCrateEnable() {
-            return rewardSection.getBoolean("crate.enabled");
-        }
-        public static List<String> crateKeys() {
-            return rewardSection.getStringList("crate.keys");
-        }
-
         public static boolean isItemEnable() {
             return rewardSection.getBoolean("item.enabled");
         }
         public static List<String> items() {
             return rewardSection.getStringList("item.items");
+        }
+
+        public static boolean isCommandEnable() {
+            return rewardSection.getBoolean("command.enabled");
+        }
+        public static List<String> commands() {
+            return rewardSection.getStringList("command.commands");
         }
     }
 }

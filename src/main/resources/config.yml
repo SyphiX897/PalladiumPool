@@ -4,43 +4,46 @@
 ### https://github.com/SyphiX897  ###
 #####################################
 
-enabled_worlds: "world;world_the_end"
 disabled_worlds: "world_nether"
-regions: "afk;afk2"
+allowed_regions: "afk;afk2"
 
 pool:
   interval: 300 #seconds
   enter_pool:
     title:
       enabled: true
-      text: "<gradient:dark_green:green>You have entered the pool"
+      title: "<gradient:dark_green:green>You have entered the pool"
+      subTitle: ""
     actionBar:
       enabled: true
-      text: "<gradient:dark_green:green>You have entered the pool"
+      actionBar: "<gradient:dark_green:green>You have entered the pool"
     message:
       enabled: true
-      text: "<gradient:dark_green:green>You have entered the pool"
+      broadcast: false
+      message: "<gradient:dark_green:green>You have entered the pool"
   leave_pool:
     title:
       enabled: true
-      text: "<gradient:dark_green:green>You have left the pool"
+      title: "<gradient:dark_red:red>You have left the pool"
+      subTitle: ""
     actionBar:
       enabled: true
-      text: "<gradient:dark_green:green>You have left the pool"
+      actionBar: "<gradient:dark_red:red>You have left the pool"
     message:
       enabled: true
-      text: "<gradient:dark_green:green>You have left the pool"
+      broadcast: false
+      message: "<gradient:dark_red:red>You have left the pool"
 
   reward:
     money:
       enabled: true
-      amount: "100-200"
-    crate:  # Supported plugins: ExcellentCrates, EcoCrate, CrazyCrate
-      enabled: true
-      keys: # "name;amount;chance"
-        - "common;2;50%"
-        - "rare;1;25%"
+      amount: "600-1000"
     item: # Supported plugin: Slimefun
       enabled: true
       items: # "name;amount;chance"
         - "DIAMOND;3;25%"
+    command:
+      enabled: true
+      commands:
+        - "console;effect give <player> haste 300 0;25%"
+        - "player;spawn;1%"

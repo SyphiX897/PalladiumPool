@@ -1,4 +1,15 @@
 name: PalladiumPool
 version: '${version}'
 main: ir.syphix.palladiumpool.PalladiumPool
-api-version: '1.20'
+api-version: '1.19'
+dependencies:
+  server:
+    Vault:
+      load: BEFORE
+      required: true
+    WorldGuard:
+      load: BEFORE
+      required: true
+    Slimefun:
+      load: BEFORE
+      required: false
