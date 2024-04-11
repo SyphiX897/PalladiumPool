@@ -1,7 +1,7 @@
 # About
 Take your server's rewards to the next level! PalladiumPool is a powerful plugin for creating in-game prize pools. Players can participate and win money, items, and other exciting rewards!
 
-Supported Minecraft versions: 1.18* - 1.20*
+Supported Minecraft versions: 1.18 - 1.20.4
 
 # Links
 * Hangar: [PalladiumPool](https://hangar.papermc.io/SyphiX/PalladiumPool)
