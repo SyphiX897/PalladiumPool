@@ -16,7 +16,6 @@ import java.util.Random;
 public class PoolActions {
 
     public static void giveMoney(Player player, String range) {
-
         Random random = new Random();
         List<String> moneyRange = TextUtils.split("-", range);
         int min = Integer.parseInt(moneyRange.get(0));
@@ -29,9 +28,9 @@ public class PoolActions {
 
     public static void giveItem(Player player, String formattedItemName) {
         List<String> itemInfo = TextUtils.split(";", formattedItemName);
-
         int chance = Integer.parseInt(itemInfo.get(2).replace("%", ""));
         int amount = Integer.parseInt(itemInfo.get(1));
+
         if (chance <= randomNumber()) return;
         if (CustomItems.customItems.containsKey(itemInfo.get(0))) {
             ItemStack itemStack = CustomItems.customItems.get(itemInfo.get(0));

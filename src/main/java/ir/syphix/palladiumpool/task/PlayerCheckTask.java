@@ -19,7 +19,7 @@ import java.time.Duration;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class PlayerCheckTask {
+public class PlayerCheckTask extends DataManager{
 
     private static int taskId;
     public static HashMap<UUID, Long> PLAYERS_TIME = new HashMap<>();
@@ -27,37 +27,32 @@ public class PlayerCheckTask {
     public static void startTask() {
         Bukkit.getScheduler().runTaskTimer(Origin.getPlugin(), task -> {
             taskId = task.getTaskId();
-            long interval = DataManager.poolInterval() * 1000L;
 
             for (Player player : Origin.getOnlinePlayers()) {
                 UUID uuid = player.getUniqueId();
                 Location location = player.getLocation().clone();
                 Material blockType = location.getBlock().getType();
 
+
                 if (blockType != Material.WATER && PLAYERS_TIME.containsKey(uuid)) {
-                    Origin.broadcast("8");
                     PLAYERS_TIME.remove(uuid);
                     sendLeaveDetails(player);
                 }
 
-                boolean isDisabledWorld = false;
-                for (String worldName : DataManager.disabledWorlds()) {
-                    if (player.getWorld().getName().equals(worldName)) {
-                        isDisabledWorld = true;
-                        break;
-                    }
+                if (disabledWorlds().contains(location.getWorld().getName())) {
+                    return;
                 }
-                if (isDisabledWorld) return;
 
                 RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
                 World world = player.getWorld();
                 RegionManager regionManager = container.get(BukkitAdapter.adapt(world));
                 boolean isAllowedRegion = false;
 
-                for (String region : DataManager.regions()) {
+                for (String region : regions()) {
                     ProtectedRegion protectedRegion = regionManager.getRegion(region);
                     if (protectedRegion == null) continue;
                     if (protectedRegion.contains(location.getBlockX(), location.getBlockY(), location.getBlockZ())) {
+
                         isAllowedRegion = true;
                     }
                 }
@@ -69,19 +64,19 @@ public class PlayerCheckTask {
                 }
 
                 if (blockType == Material.WATER && PLAYERS_TIME.containsKey(uuid)) {
-                    if (PLAYERS_TIME.get(uuid) + interval <= System.currentTimeMillis()) {
+                    if (PLAYERS_TIME.get(uuid) + poolInterval() <= System.currentTimeMillis()) {
                         PLAYERS_TIME.put(uuid, System.currentTimeMillis());
 
-                        if (DataManager.Reward.isMoneyEnable()) {
-                             PoolActions.giveMoney(player, DataManager.Reward.moneyRange());
+                        if (Reward.isMoneyEnable()) {
+                             PoolActions.giveMoney(player, Reward.moneyRange());
                         }
-                        if (DataManager.Reward.isItemEnable()) {
-                            for (String formattedItemName : DataManager.Reward.items()) {
+                        if (Reward.isItemEnable()) {
+                            for (String formattedItemName : Reward.items()) {
                                 PoolActions.giveItem(player, formattedItemName);
                             }
                         }
-                        if (DataManager.Reward.isCommandEnable()) {
-                            for (String formattedCommand : DataManager.Reward.commands()) {
+                        if (Reward.isCommandEnable()) {
+                            for (String formattedCommand : Reward.commands()) {
                                 PoolActions.runCommand(player, formattedCommand);
                             }
                         }
@@ -91,42 +86,38 @@ public class PlayerCheckTask {
         }, 0, 5);
     }
 
-    public static void stopTask() {
-        Bukkit.getScheduler().cancelTask(taskId);
-    }
-
     private static void sendEnterDetails(Player player) {
-        if (DataManager.EnterPool.isTitleEnable()) {
-            player.showTitle(Title.title(DataManager.EnterPool.title(player),
-                    DataManager.EnterPool.subTitle(player), Title.Times.times(Duration.ofMillis(500),
+        if (EnterPool.isTitleEnable()) {
+            player.showTitle(Title.title(EnterPool.title(player),
+                    EnterPool.subTitle(player), Title.Times.times(Duration.ofMillis(500),
                             Duration.ofMillis(750), Duration.ofMillis(500))));
         }
-        if (DataManager.EnterPool.isActionBarEnable()) {
-            player.sendActionBar(DataManager.EnterPool.actionBar(player));
+        if (EnterPool.isActionBarEnable()) {
+            player.sendActionBar(EnterPool.actionBar(player));
         }
-        if (DataManager.EnterPool.isMessageEnable()) {
-            if (DataManager.EnterPool.isMessageBroadcast()) {
-                Bukkit.broadcast(DataManager.EnterPool.message(player));
+        if (EnterPool.isMessageEnable()) {
+            if (EnterPool.isMessageBroadcast()) {
+                Bukkit.broadcast(EnterPool.message(player));
             } else {
-                player.sendMessage(DataManager.EnterPool.message(player));
+                player.sendMessage(EnterPool.message(player));
             }
         }
     }
 
     private static void sendLeaveDetails(Player player) {
-        if (DataManager.LeavePool.isTitleEnable()) {
-            player.showTitle(Title.title(DataManager.LeavePool.title(player),
-                    DataManager.LeavePool.subTitle(player), Title.Times.times(Duration.ofMillis(500),
+        if (LeavePool.isTitleEnable()) {
+            player.showTitle(Title.title(LeavePool.title(player),
+                    LeavePool.subTitle(player), Title.Times.times(Duration.ofMillis(500),
                             Duration.ofMillis(750), Duration.ofMillis(500))));
         }
-        if (DataManager.LeavePool.isActionBarEnable()) {
-            player.sendActionBar(DataManager.LeavePool.actionBar(player));
+        if (LeavePool.isActionBarEnable()) {
+            player.sendActionBar(LeavePool.actionBar(player));
         }
-        if (DataManager.LeavePool.isMessageEnable()) {
-            if (DataManager.LeavePool.isMessageBroadcast()) {
-                Bukkit.broadcast(DataManager.LeavePool.message(player));
+        if (LeavePool.isMessageEnable()) {
+            if (LeavePool.isMessageBroadcast()) {
+                Bukkit.broadcast(LeavePool.message(player));
             } else {
-                player.sendMessage(DataManager.LeavePool.message(player));
+                player.sendMessage(LeavePool.message(player));
             }
         }
     }

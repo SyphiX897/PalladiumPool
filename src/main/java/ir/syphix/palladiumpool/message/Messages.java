@@ -11,7 +11,6 @@ public class Messages {
     public static String INVENTORY_IS_FULL;
     public static String RELOAD;
 
-
     public Messages() {
         PREFIX = getMessage("prefix");
         INVENTORY_IS_FULL = getMessage("inventory_is_full");

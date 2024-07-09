@@ -1,3 +1,5 @@
+import org.gradle.internal.buildoption.Origin
+
 plugins {
     id("java")
     id("maven-publish")
@@ -5,7 +7,7 @@ plugins {
 }
 
 group = "ir.syphix"
-version = "1.0.1"
+version = "1.0.2"
 
 repositories {
     mavenCentral()
